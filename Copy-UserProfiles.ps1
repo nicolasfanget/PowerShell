@@ -1,7 +1,7 @@
 <#
 
 Make sure the account that runs this script has administrative priviledges on both computers
-
+For the best results make sure the user is logged off the source computer
 Usage: .\Copy-UserProfiles.ps1 -UserToCopy user1 -RemoteComputer remotepc1 -DomainController dc1
 
 #>
@@ -31,7 +31,7 @@ if (Test-Path "\\$RemoteComputer\c$\Users\") {
 } else { Write-Host "Unable to access: \\$RemoteComputer\c$\Users\" }
 
 # Export the registry entry from the src computer
-reg.exe export "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\$($UserSID.SID)" \\adcon.ad.fau.edu\c$\Users\TempUserProfile.reg
+reg.exe export "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\$($UserSID.SID)" \\$RemoteComputer\c$\Users\TempUserProfile.reg
 # Create the new registry profile on the remote computer
 Invoke-Command $RemoteComputer { reg.exe import C:\Users\TempUserProfile.reg }
 # Remove the temporary registry key file from dst computer
