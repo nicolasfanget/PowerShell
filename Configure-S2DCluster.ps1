@@ -6,7 +6,7 @@ $nodes = ("node1","node2","node3","node4","node5")
 Invoke-Command $nodes { Install-WindowsFeature Data-Center-Bridging }
 Invoke-Command $nodes { Install-WindowsFeature Multipath-IO }
 Invoke-Command $nodes { Install-WindowsFeature Failover-Clustering -IncludeAllSubFeature -IncludeManagementTools }
-Invoke-Command $nodes { Install-WindowsFeature -Name Hyper-V -IncludeManagementTools -Restart } 
+Invoke-Command $nodes { Install-WindowsFeature -Name Hyper-V -IncludeManagementTools -Restart }
 #####################################################################################################################################
 
 # Configure QoS and Jumbo Packets
