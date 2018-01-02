@@ -23,8 +23,8 @@ Invoke-Command $nodes { Set-NetAdapterAdvancedProperty -InterfaceDescription "*M
 #####################################################################################################################################
 
 # Map physcial network adapters to virtual net adapters
-Invoke-Command $nodes { (Get-NetAdapter | ? { $_.Name -like "Slot 4*" -and $_.Status -eq "Up" }).Name | ?{ Set-VMNetworkAdapterTeamMapping -VMNetworkAdapterName "Storage1" -ManagementOS -PhysicalNetAdapterName $_ } }
-Invoke-Command $nodes { (Get-NetAdapter | ? { $_.Name -like "Slot 6*" -and $_.Status -eq "Up" }).Name | ?{ Set-VMNetworkAdapterTeamMapping -VMNetworkAdapterName "Storage2" -ManagementOS -PhysicalNetAdapterName $_ } }
+Invoke-Command $nodes { (Get-NetAdapter | ? { $_.Name -like "Slot 4*" -and $_.Status -eq "Up" }).Name | ? { Set-VMNetworkAdapterTeamMapping -VMNetworkAdapterName "S2D Cluster Storage 1" -ManagementOS -PhysicalNetAdapterName $_ } }
+Invoke-Command $nodes { (Get-NetAdapter | ? { $_.Name -like "Slot 6*" -and $_.Status -eq "Up" }).Name | ? { Set-VMNetworkAdapterTeamMapping -VMNetworkAdapterName "S2D Cluster Storage 2" -ManagementOS -PhysicalNetAdapterName $_ } }
 #####################################################################################################################################
 
 # Run cluster validation
