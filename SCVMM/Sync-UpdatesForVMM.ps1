@@ -22,6 +22,13 @@ Param (
 # Define date for output file formatting
 $date = Get-Date -Format "MM-dd-yyyy"
 
+# Verify logs folder exists, if not create it
+if (!(Test-Path ".\logs")) {
+
+    New-Item -ItemType Directory -Path ".\logs"
+
+}
+
 # Connect to our VMM server
 Get-SCVMMServer -ComputerName $VMMServer | Out-Null
 
@@ -41,6 +48,6 @@ $UpdatesToAdd | ForEach-Object {Set-SCUpdate $_ -AcceptLicenseAgreement}
 # If there are updates to add to our baseline lets do that now
 if ($UpdatesToAdd -ne $null) {
 
-    Set-SCBaseline -Baseline $Baseline -Name $VMMBaseLine -RunAsynchronously -Description "All Updates" -AddUpdates $UpdatesToAdd | Out-File ".\$date`_sync_vmm_updates_log.txt"
+    Set-SCBaseline -Baseline $Baseline -Name $VMMBaseLine -RunAsynchronously -Description "All Updates" -AddUpdates $UpdatesToAdd | Out-File ".\logs\$date`_sync_vmm_updates_log.txt"
 
 }
