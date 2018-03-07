@@ -1,4 +1,2 @@
 *.txt
 *.csv
-Office_365_Connectors/Connect-ExchangeOnline.ps1
-Office_365_Connectors/Connect-SecurityComplianceCenter.ps1
