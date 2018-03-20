@@ -1,7 +1,8 @@
 <#
 
-This script lists size information for a given directory
+This script lists size information for files and folders in a given directory
 
+Example: .\Get-DirectorySize.ps1 -Directory C:\
 
 #>
 
@@ -17,8 +18,7 @@ Param (
 function Get-FolderSize([string] $InputDirectory) {
 
     # Calculate folder size
-    $Folder = Get-ChildItem -Path $InputDirectory -Force -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -notlike "C:\Users\All Users" } | `
-    Measure-Object -Property Length -Sum -ErrorAction SilentlyContinue
+    $Folder = Get-ChildItem -Path $InputDirectory -Force -Recurse -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum -ErrorAction SilentlyContinue
 
     # Convert to MB
     $FolderSize = [math]::Round(($Folder.Sum / 1MB), 2)
@@ -150,4 +150,8 @@ Get-ChildItem -Path $Directory -Force -Attributes !Directory+!System | ForEach-O
 
 }
 
+# Write warning about how size is calculated and symbolic links
+Write-Host -ForegroundColor Yellow  "`nWARNING: Because of how Get-ChildItem uses recursion with sym links you may notice size calculation differences.`nUnfortunately it is a known issue with no known fix at this time.`n`n"
+
+# Write out the table with the information gathered
 Write-Output $ItemsArray | Format-Table -AutoSize
