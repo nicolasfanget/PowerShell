@@ -14,7 +14,7 @@ $365Credentials = New-Object -TypeName System.Management.Automation.PSCredential
 
 # Create and import the remote powershell session
 $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $365Credentials -Authentication Basic -AllowRedirection
-Import-PSSession $Session
+Import-PSSession $Session -DisableNameChecking
 
 # Remind user to disconnect their session
 Write-Host -ForegroundColor Yellow "`n`nRemember to disconnect your remote session using: Remove-PSSession `$Session"
