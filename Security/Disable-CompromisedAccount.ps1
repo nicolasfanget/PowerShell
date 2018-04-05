@@ -20,8 +20,10 @@ Param (
 
 )
 
-# Disable the account
-Set-ADUser -Identity $Identity -Enabled $false -Server BOCDCFAU01 -Credential $AD_Creds
+# Disable the account and notice to the description field
+$CurrentDescription = Get-ADUser -Identity $Identity -Server BOCDCFAU01 -Credential $AD_Creds -Properties Description | Select-Object Description
+$CurrentDate = (Get-Date).ToString()
+Set-ADUser -Identity $Identity -Enabled $false -Description "$($CurrentDescription.Description) - COMPROMISED $CurrentDate" -Server BOCDCFAU01 -Credential $AD_Creds
 
 # Send mail to myfauacct, security and systems
 Send-MailMessage -SmtpServer $SmtpServer -From $FromAddress -To $ToAddress -Cc $CcAddress `
