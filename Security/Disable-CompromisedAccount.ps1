@@ -26,6 +26,6 @@ $CurrentDate = (Get-Date).ToString()
 Set-ADUser -Identity $Identity -Enabled $false -Description "$($CurrentDescription.Description) - COMPROMISED $CurrentDate" -Server BOCDCFAU01 -Credential $AD_Creds
 
 # Send mail to myfauacct, security and systems
-Send-MailMessage -SmtpServer $SmtpServer -From $FromAddress -To $ToAddress -Cc $CcAddress `
+Send-MailMessage -SmtpServer $SmtpServer -UseSsl -From $FromAddress -To $ToAddress -Cc $CcAddress `
     -Subject "Compromised Account Disabled: $Reason" `
     -Body "The following account has been compromised and has been disabled in AD:`n`n$Identity`n`nReason: $Reason"
