@@ -32,6 +32,10 @@ New-ADGroup -Name $GroupName -SamAccountName $GroupName -GroupScope Universal -G
 # I put this into a for loop so that non-existent users don't cause other members to not be added
 foreach ($User in $Users) {
     
-    Add-ADGroupMember -Identity $GroupName -Members $User -Server BOCDCFAU01 -Credential $AD_Creds
+    try {
 
+        Add-ADGroupMember -Identity $GroupName -Members $User -Server BOCDCFAU01 -Credential $AD_Creds
+
+    } catch { Write-Host -ForegroundColor Yellow "$User does not exist." }
+    
 }
