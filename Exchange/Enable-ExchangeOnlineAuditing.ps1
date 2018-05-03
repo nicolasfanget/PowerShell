@@ -32,7 +32,7 @@ Import-PSSession $Session
 # Get mailboxes that do not have auditing enabled and turn it on, log the email addresses of who got turned on
 Get-Mailbox -ResultSize Unlimited | Where-Object { $_.AuditEnabled -eq $false } | ForEach-Object {
 
-    Set-Mailbox -Identity $_.PrimarySmtpAddress -AuditEnabled $true -AuditOwner @{Add = "Copy", "Create", "FolderBind", "MessageBind", "Move", "MoveToDeletedItems", "SendAs", "SendOnBehalf", "Update", "MailboxLogin", "HardDelete", "SoftDelete"}
+    Set-Mailbox -Identity $_.PrimarySmtpAddress -AuditEnabled $true -AuditOwner @{Add = "Create", "SoftDelete", "HardDelete", "Update", "Move", "MoveToDeletedItems", "MailboxLogin", "UpdateFolderPermissions"}
     Write-Output "Enabled mailbox auditing for: $($_.PrimarySmtpAddress)"
 
 } | Out-File ".\logs\Enable-ExchangeOnlineAuditing_Log_$Date.log"
