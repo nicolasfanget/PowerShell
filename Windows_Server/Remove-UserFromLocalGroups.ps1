@@ -7,7 +7,6 @@ Example: .\Remove-UserFromLocalGroups.ps1 -GroupName sftp* -UsersFile ".\Termina
 
 #>
 
-
 [CmdLetBinding()]
 Param(
 
@@ -23,14 +22,6 @@ $Users = Get-Content $UsersFile
 
 # Loop through each group and remove users from the UsersFile
 foreach ($LocalGroup in $LocalGroups) {
-
-    # If the script fails you can use the code below to find local groups with broken sids
-    # This is a known issue with the Get-LocalGroupMember cmdlet, which may affect the Remove-LocalGroupMember cmdlet
-    <#
-    Write-Host "`n`n$LocalGroup Members:`n"
-    $Users = Get-LocalGroupMember $LocalGroup -ErrorAction Stop | Select-Object Name
-    Write-Host $Users.Name
-    #>
 
     # Loop through each user and remove them from the current group
     foreach ($User in $Users) {
